@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<board name="pac_a10" vfabric="0" big_endian="0">
+	 <global_mem_config name="DDR" mode="burst-interleaved"/> 
+	<kernel name="ethash_calculate_dag_item" csr_addr="0" csr_size="128" work_group_invariant="0" vector_lanes="1" >
+		<work_group size_x="0" size_y="0" size_z="0" max_size="2147483647"/>
+			<argument index="0" type="0" category="0" size="4" >
+			</argument>
+			<argument index="1" type="2" category="1" size="8" >
+			</argument>
+			<argument index="2" type="2" category="1" size="8" >
+			</argument>
+			<argument index="3" type="0" category="0" size="4" >
+			</argument>
+	</kernel>
+	<kernel name="ethash_search" csr_addr="256" csr_size="256" work_group_invariant="0" vector_lanes="1" >
+		<work_group size_x="128" size_y="1" size_z="1" max_size="128"/>
+			<argument index="0" type="2" category="1" size="8" >
+			</argument>
+			<argument index="1" type="3" category="1" size="8" >
+			</argument>
+			<argument index="2" type="2" category="1" size="8" >
+			</argument>
+			<argument index="3" type="0" category="0" size="8" >
+			</argument>
+			<argument index="4" type="0" category="0" size="8" >
+			</argument>
+			<argument index="5" type="0" category="0" size="4" >
+			</argument>
+		<local_memory id="5" local_demand="1024"/>
+	</kernel>
+</board>

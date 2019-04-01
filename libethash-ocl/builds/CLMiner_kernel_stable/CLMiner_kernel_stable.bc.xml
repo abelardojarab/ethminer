@@ -1,0 +1,466 @@
+<KERNEL_LIST>
+	<PROGRAM_GLOBAL_MEM_SIZE value="0" />
+	<KERNEL_BUNDLE name="ethash_calculate_dag_item" compute_units="1">
+	<KERNEL name="ethash_calculate_dag_item" filename="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_function_wrapper.vhd" version="1" cosim_name="ethash_calculate_dag_item" enable_global_profiling="1" workgroup_invariant="0" has_global_atomics="0" num_vector_lanes="1" num_profiling_signals="0" arbitration_latency="6" kernel_side_mem_latency="16">
+		<RESOURCE_INFO>
+			<ID value="1" />
+			<AGGREGATE_STATIC_LOCAL_MEM_SIZE value="0" />
+			<MAX_WORK_GROUP_SIZE value="2147483647" />
+			<REQUIRED_WORK_GROUP_SIZE x="0" y="0" z="0" />
+		</RESOURCE_INFO>
+		<CONFIGURATION>
+			<INTERFACE port="clock_reset" type="clock"/>
+			<INTERFACE port="cra_irq" type="irq"/>
+			<INTERFACE port="cra" type="slave" cosim_name="" width="64" size="128" latency="0" />
+		</CONFIGURATION>
+		<REQUIREMENTS>
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/linux64/lib/dspba/Libraries/vhdl/base/dspba_library_package.vhd" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/linux64/lib/dspba/Libraries/vhdl/base/dspba_library.vhd" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_data_fifo.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_fifo.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_ll_fifo.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_ll_ram_fifo.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_valid_fifo_counter.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_dspba_valid_fifo_counter.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_staging_reg.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/hld_fifo.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/hld_fifo_zero_width.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_high_speed_fifo.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_low_latency_fifo.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_zero_latency_fifo.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_fanout_pipeline.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_std_synchronizer_nocut.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_tessellated_incr_decr_threshold.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_tessellated_incr_lookahead.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_reset_handler.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_lfsr.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_dspba_buffer.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_full_detector.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_top.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_permute_address.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_pipelined.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_enabled.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_basic_coalescer.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_simple.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_streaming.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_burst_master.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_bursting_load_stores.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_non_aligned_write.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_read_cache.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_atomic.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_prefetch_block.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_wide_wrapper.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_streaming_prefetch.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_aligned_burst_coalesced_lsu.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_toggle_detect.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_debug_mem.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_burst_coalesced_pipelined_write.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_burst_coalesced_pipelined_read.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_fifo_stall_valid_lookahead.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_loop_limiter.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_clock2x_holder.v" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_function_wrapper.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_function.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B1.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B1_branch.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B1_stall_region.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B1_merge_reg.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_sfc_c0_for_cond_i_i_outer_ethash_calcuA0Zlculate_dag_item.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_acl_sfc_exit_c0_for_cond_i_i_outer_ethA0Zlate_dag_item251.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_acl_sfc_exit_c0_for_cond_i_i_outer_ethA0Ztem524_data_fifo.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_acl_sfc_exit_c0_for_cond_i_i_outer_ethA0Zem_full_detector.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_sfc_logic_c0_for_cond_i_i_outer_ethashA0Zulate_dag_item94.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_syncbuf_isolate_sync_buffer_ethash_calA0Zulate_dag_item96.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B1_merge.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B1_sr_0.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B1_sr_1.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B2.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B2_merge.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B2_stall_region.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B2_branch.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B2_sr_0.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B3.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B3_branch.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B3_stall_region.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_load_memcoalesce_g_light_load_02193_etA0Zlate_dag_item331.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/readdata_reg_memcoalesce_g_light_load_02A0Zculate_dag_item1.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_sfc_c1_for_body15_ethash_calculate_dagA0Zlculate_dag_item.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_sfc_logic_c1_for_body15_ethash_calculaA0Zlate_dag_item333.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_acl_sfc_exit_c1_for_body15_ethash_calcA0Zlate_dag_item341.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_acl_sfc_exit_c1_for_body15_ethash_calcA0Ztem528_data_fifo.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_acl_sfc_exit_c1_for_body15_ethash_calcA0Zem_full_detector.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B3_merge_reg.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_sfc_c0_for_body15_ethash_calculate_dagA0Zlculate_dag_item.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_acl_sfc_exit_c0_for_body15_ethash_calcA0Zlate_dag_item329.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_acl_sfc_exit_c0_for_body15_ethash_calcA0Ztem526_data_fifo.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_acl_sfc_exit_c0_for_body15_ethash_calcA0Zem_full_detector.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_sfc_logic_c0_for_body15_ethash_calculaA0Zlate_dag_item259.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_syncbuf_g_light_sync_buffer1_ethash_caA0Zlate_dag_item326.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B3_merge.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B3_sr_0.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B3_sr_1.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B4.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B4_merge.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B4_stall_region.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B4_branch.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B4_sr_0.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B5.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B5_branch.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B5_stall_region.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B5_merge_reg.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_sfc_c0_for_cond_i_i13_outer_ethash_calA0Zlculate_dag_item.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_acl_sfc_exit_c0_for_cond_i_i13_outer_eA0Zlate_dag_item510.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_acl_sfc_exit_c0_for_cond_i_i13_outer_eA0Ztem530_data_fifo.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_acl_sfc_exit_c0_for_cond_i_i13_outer_eA0Zem_full_detector.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_sfc_logic_c0_for_cond_i_i13_outer_ethaA0Zlate_dag_item357.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B5_merge.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B5_sr_0.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B5_sr_1.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B6.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B6_merge.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B6_stall_region.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_store_unnamed_ethash_calculate_dag_iteA0Zlate_dag_item520.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_syncbuf_g_dag_sync_buffer_ethash_calcuA0Zlate_dag_item517.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B6_branch.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B6_sr_0.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B0.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/bb_ethash_calculate_dag_item_B0_stall_region.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_load_memcoalesce_g_light_load_0_ethashA0Zulate_dag_item71.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/readdata_reg_memcoalesce_g_light_load_0_A0Zculate_dag_item0.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B0_merge_reg.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_sfc_c0_entry_ethash_calculate_dag_itemA0Zlculate_dag_item.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_acl_sfc_exit_c0_entry_ethash_calculateA0Zulate_dag_item70.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_acl_sfc_exit_c0_entry_ethash_calculateA0Ztem522_data_fifo.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_acl_sfc_exit_c0_entry_ethash_calculateA0Zem_full_detector.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_sfc_logic_c0_entry_ethash_calculate_daA0Zculate_dag_item0.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_syncbuf_g_light_sync_buffer_ethash_calA0Zulate_dag_item67.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/i_syncbuf_start_sync_buffer_ethash_calculate_dag_item2.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B0_branch.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_B0_merge.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/loop_limiter_ethash_calculate_dag_item0.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/loop_limiter_ethash_calculate_dag_item1.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/loop_limiter_ethash_calculate_dag_item2.vhd" />
+			<FILE name="kernel_hdl/ethash_calculate_dag_item/ethash_calculate_dag_item_function_cra_slave.vhd" />
+		</REQUIREMENTS>
+		<DATA>
+			<INTERFACE port="memcoalesce_g_light_load_0" cosim_name="" type="master" width="512" burstwidth="5" pipelined="true" addr_space="__global" aspace_id="1" optype="read" criticality="1024" buffer_location="" group_id="0" />
+			<INTERFACE port="memcoalesce_g_light_load_02193" cosim_name="" type="master" width="512" burstwidth="5" pipelined="true" addr_space="__global" aspace_id="1" optype="read" criticality="1048576" buffer_location="" group_id="0" />
+			<INTERFACE port="unnamed_ethash_calculate_dag_item15" cosim_name="" type="master" width="512" burstwidth="5" pipelined="true" addr_space="__global" aspace_id="1" optype="write" criticality="1024" buffer_location="" group_id="0" />
+		</DATA>
+		<KERNEL_ARGS>
+			<ARGUMENT name="start" cosim_name="" opencl_access_type="ACL_ARG_ADDR_NONE" opencl_type_category="ACL_ARG_BY_VALUE" size="4" type_qualifier="ARG_TYPE_NONE" access_qualifier="ARG_ACCESS_NONE" type_name="uint" >
+		</ARGUMENT>
+			<ARGUMENT name="g_light" cosim_name="" opencl_access_type="ACL_ARG_ADDR_GLOBAL" opencl_type_category="ACL_ARG_MEM_OBJ" size="8" type_qualifier="C" access_qualifier="ARG_ACCESS_NONE" type_name="hash64_t*" >
+		</ARGUMENT>
+			<ARGUMENT name="g_dag" cosim_name="" opencl_access_type="ACL_ARG_ADDR_GLOBAL" opencl_type_category="ACL_ARG_MEM_OBJ" size="8" type_qualifier="ARG_TYPE_NONE" access_qualifier="ARG_ACCESS_NONE" type_name="hash64_t*" >
+		</ARGUMENT>
+			<ARGUMENT name="isolate" cosim_name="" opencl_access_type="ACL_ARG_ADDR_NONE" opencl_type_category="ACL_ARG_BY_VALUE" size="4" type_qualifier="ARG_TYPE_NONE" access_qualifier="ARG_ACCESS_NONE" type_name="uint" >
+		</ARGUMENT>
+		</KERNEL_ARGS>
+		<PRINTF_FORMAT_STRINGS>
+		</PRINTF_FORMAT_STRINGS>
+		<PRINTF_INTERFACES>
+		</PRINTF_INTERFACES>
+	</KERNEL>
+	</KERNEL_BUNDLE>
+	<KERNEL_BUNDLE name="ethash_search" compute_units="1">
+	<KERNEL name="ethash_search" filename="kernel_hdl/ethash_search/ethash_search_function_wrapper.vhd" version="1" cosim_name="ethash_search" enable_global_profiling="1" workgroup_invariant="0" has_global_atomics="1" num_vector_lanes="1" num_profiling_signals="0" arbitration_latency="6" kernel_side_mem_latency="16">
+		<RESOURCE_INFO>
+			<ID value="0" />
+			<LOCAL_MEM aspace="5" begin="0" next="12288" banks="4" width="128" static_demand="1024" num_groups="1" has_atomics="0" ports="4" write_ports="4" rdw_mode="0" repl_fac="1" ic_req_latency="0" ic_rrp_latency="0" ic_wrp_latency="0" req_pipe_interval="0" ret_fanout="0" num_ports_per_phys_mem="4" phys_mem_latency="4" maximum_depth="0" enable="0" ram_mode="1" preferred_width="160" use_mif_file="0">
+				<BANK id="0">
+					<PORT id="0" register="0" />
+					<PORT id="1" register="0" />
+					<PORT id="2" register="0" />
+					<PORT id="3" register="0" />
+				</BANK>
+				<BANK id="1">
+					<PORT id="0" register="0" />
+					<PORT id="1" register="0" />
+					<PORT id="2" register="0" />
+					<PORT id="3" register="0" />
+				</BANK>
+				<BANK id="2">
+					<PORT id="0" register="0" />
+					<PORT id="1" register="0" />
+					<PORT id="2" register="0" />
+					<PORT id="3" register="0" />
+				</BANK>
+				<BANK id="3">
+					<PORT id="0" register="0" />
+					<PORT id="1" register="0" />
+					<PORT id="2" register="0" />
+					<PORT id="3" register="0" />
+				</BANK>
+			</LOCAL_MEM>
+			<AGGREGATE_STATIC_LOCAL_MEM_SIZE value="1024" />
+			<MAX_WORK_GROUP_SIZE value="128" />
+			<REQUIRED_WORK_GROUP_SIZE x="128" y="1" z="1" />
+		</RESOURCE_INFO>
+		<CONFIGURATION>
+			<INTERFACE port="clock_reset" type="clock"/>
+			<INTERFACE port="cra_irq" type="irq"/>
+			<INTERFACE port="cra" type="slave" cosim_name="" width="64" size="256" latency="0" />
+		</CONFIGURATION>
+		<REQUIREMENTS>
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/linux64/lib/dspba/Libraries/vhdl/base/dspba_library_package.vhd" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/linux64/lib/dspba/Libraries/vhdl/base/dspba_library.vhd" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_data_fifo.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_fifo.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_ll_fifo.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_ll_ram_fifo.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_valid_fifo_counter.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_dspba_valid_fifo_counter.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_staging_reg.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/hld_fifo.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/hld_fifo_zero_width.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_high_speed_fifo.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_low_latency_fifo.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_zero_latency_fifo.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_fanout_pipeline.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_std_synchronizer_nocut.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_tessellated_incr_decr_threshold.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_tessellated_incr_lookahead.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_reset_handler.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_lfsr.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_work_group_limiter.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_work_group_limiter_dspba.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_dspba_buffer.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_top.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_permute_address.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_pipelined.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_enabled.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_basic_coalescer.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_simple.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_streaming.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_burst_master.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_bursting_load_stores.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_non_aligned_write.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_read_cache.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_atomic.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_prefetch_block.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_wide_wrapper.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_streaming_prefetch.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_aligned_burst_coalesced_lsu.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_toggle_detect.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_debug_mem.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_burst_coalesced_pipelined_write.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/lsu_burst_coalesced_pipelined_read.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_fifo_stall_valid_lookahead.sv" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_full_detector.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_barrier_simple.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_loop_limiter.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_clock2x_holder.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_embedded_workgroup_issuer_dspba.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_embedded_workgroup_issuer.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_embedded_workgroup_issuer_complex.v" />
+			<FILE name="$::env(INTELFPGAOCLSDKROOT)/ip/acl_embedded_workgroup_issuer_fifo.v" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_function_wrapper.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_function.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B4_sr_0.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B4_sr_1.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B1_sr_0.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B1_sr_1.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B2_sr_0.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B3.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B3_branch.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B3_stall_region.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B3_merge_reg.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_load_unnamed_ethash_search27_ethash_search237.vhd" />
+			<FILE name="kernel_hdl/ethash_search/readdata_reg_unnamed_ethash_search27_ethash_search1.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_store_memdep_198_ethash_search229.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_store_memdep_199_ethash_search226.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_store_memdep_200_ethash_search223.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_store_memdep_ethash_search232.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_load_unnamed_ethash_search28_ethash_search247.vhd" />
+			<FILE name="kernel_hdl/ethash_search/readdata_reg_unnamed_ethash_search28_ethash_search2.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_sbar_unnamed_ethash_search29_ethash_search234.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_sbar_unnamed_ethash_search30_ethash_search239.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_sbar_unnamed_ethash_search31_ethash_search245.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_store_memdep_203_ethash_search243.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B3_merge.vhd" />
+			<FILE name="kernel_hdl/ethash_search/dupName_0_priority_encoder_26ui0676j636g6u0qc0xajz.vhd" />
+			<FILE name="kernel_hdl/ethash_search/dupName_1_loop_capacity_FIFO_2u1i4agm067A0Z6x6s6u0qc0xgbuoz.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B3_sr_0.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B3_sr_1.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B4.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B4_branch.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B4_merge.vhd" />
+			<FILE name="kernel_hdl/ethash_search/dupName_1_priority_encoder_26ui0676j636g6u0qc0xajz.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B4_stall_region.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B4_merge_reg.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_sfc_c0_for_body61_ethash_search_c0_entA0Z23_ethash_search.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_sfc_logic_c0_for_body61_ethash_search_A0Zethash_search255.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_sfc_exit_c0_for_body61_ethash_searA0Zethash_search323.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_sfc_exit_c0_for_body61_ethash_searA0Zrch585_data_fifo.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_sfc_exit_c0_for_body61_ethash_searA0Zch_full_detector.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_load_unnamed_ethash_search35_ethash_search335.vhd" />
+			<FILE name="kernel_hdl/ethash_search/readdata_reg_unnamed_ethash_search35_ethash_search4.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_load_unnamed_ethash_search34_ethash_search332.vhd" />
+			<FILE name="kernel_hdl/ethash_search/readdata_reg_unnamed_ethash_search34_ethash_search3.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_sbar_unnamed_ethash_search33_ethash_search330.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_store_memdep_204_ethash_search328.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_syncbuf_g_dag_sync_buffer_ethash_search249.vhd" />
+			<FILE name="kernel_hdl/ethash_search/dupName_0_loop_capacity_FIFO_2u1i4agm067A0Z6x6s6u0qc0xgbuoz.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B5_sr_0.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B6_sr_0.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B7_sr_0.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B7_sr_1.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B8_sr_0.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B0.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B0_stall_region.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B0_merge_reg.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_load_memcoalesce_g_header_load_0_ethash_search5.vhd" />
+			<FILE name="kernel_hdl/ethash_search/readdata_reg_memcoalesce_g_header_load_0_ethash_search0.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_wg_limiter_enter_l_grpid_0_ethash_search0.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_syncbuf_g_header_sync_buffer_ethash_search3.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_syncbuf_start_nonce_sync_buffer_ethash_search15.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B0_branch.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B0_merge.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B1.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B1_stall_region.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B1_merge_reg.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_sfc_c0_for_cond_i_outer_ethash_search_A0Zer_ethash_search.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_sfc_exit_c0_for_cond_i_outer_ethasA0Zethash_search214.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_sfc_exit_c0_for_cond_i_outer_ethasA0Zrch583_data_fifo.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_sfc_exit_c0_for_cond_i_outer_ethasA0Zch_full_detector.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_sfc_logic_c0_for_cond_i_outer_ethash_sA0Z_ethash_search19.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_syncbuf_isolate_sync_buffer_ethash_search22.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B1_branch.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B1_merge.vhd" />
+			<FILE name="kernel_hdl/ethash_search/priority_encoder.vhd" />
+			<FILE name="kernel_hdl/ethash_search/loop_capacity_FIFO.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B2.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B2_stall_region.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B2_branch.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B2_merge.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B5.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B5_stall_region.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_load_memcoalesce_null_load_0_ethash_search346.vhd" />
+			<FILE name="kernel_hdl/ethash_search/readdata_reg_memcoalesce_null_load_0_ethash_search5.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_sfc_c0_for_end91_ethash_search_c0_enteA0Z35_ethash_search.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_sfc_exit_c0_for_end91_ethash_searcA0Zethash_search339.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_sfc_exit_c0_for_end91_ethash_searcA0Zrch587_data_fifo.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_sfc_exit_c0_for_end91_ethash_searcA0Zch_full_detector.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_sfc_logic_c0_for_end91_ethash_search_cA0Zethash_search337.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_sfc_c1_for_end91_ethash_search_c1_enter_ethash_search.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_sfc_exit_c1_for_end91_ethash_searcA0Zethash_search356.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_sfc_exit_c1_for_end91_ethash_searcA0Zrch589_data_fifo.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_sfc_exit_c1_for_end91_ethash_searcA0Zch_full_detector.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_sfc_logic_c1_for_end91_ethash_search_cA0Zethash_search348.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_load_memcoalesce_null_load_016_ethash_search350.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_sbar_unnamed_ethash_search36_ethash_search344.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_sbar_unnamed_ethash_search40_ethash_search357.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_store_memdep_205_ethash_search342.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B5_branch.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B5_merge.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B6.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B6_stall_region.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B6_branch.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B6_merge.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B7.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B7_stall_region.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B7_merge_reg.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_sfc_c0_for_cond_i3_outer_ethash_searchA0Z79_ethash_search.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_sfc_exit_c0_for_cond_i3_outer_ethaA0Zethash_search550.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_sfc_exit_c0_for_cond_i3_outer_ethaA0Zrch591_data_fifo.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_sfc_exit_c0_for_cond_i3_outer_ethaA0Zch_full_detector.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_sfc_logic_c0_for_cond_i3_outer_ethash_A0Zethash_search367.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B7_branch.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B7_merge.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B8.vhd" />
+			<FILE name="kernel_hdl/ethash_search/bb_ethash_search_B8_stall_region.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_vol_store_unnamed_ethash_search63_ethash_search575.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_acl_wg_limiter_exit_unnamed_ethash_seaA0Zethash_search582.vhd" />
+			<FILE name="kernel_hdl/ethash_search/wgl_exit_storage.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_syncbuf_g_output_sync_buffer1_ethash_search561.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_syncbuf_g_output_sync_buffer2_ethash_search567.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_syncbuf_g_output_sync_buffer3_ethash_search572.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_syncbuf_g_output_sync_buffer4_ethash_search577.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_syncbuf_g_output_sync_buffer_ethash_search556.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_syncbuf_target_sync_buffer_ethash_search554.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_unknown_call152_ethash_search559.vhd" />
+			<FILE name="kernel_hdl/ethash_search/readdata_reg_call152_ethash_search7.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_vol_store_unnamed_ethash_search61_ethash_search565.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_vol_store_unnamed_ethash_search62_ethash_search570.vhd" />
+			<FILE name="kernel_hdl/ethash_search/i_vol_store_unnamed_ethash_search64_ethash_search580.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B8_branch.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_B8_merge.vhd" />
+			<FILE name="kernel_hdl/ethash_search/loop_limiter_ethash_search0.vhd" />
+			<FILE name="kernel_hdl/ethash_search/loop_limiter_ethash_search1.vhd" />
+			<FILE name="kernel_hdl/ethash_search/loop_limiter_ethash_search2.vhd" />
+			<FILE name="kernel_hdl/ethash_search/loop_limiter_ethash_search3.vhd" />
+			<FILE name="kernel_hdl/ethash_search/ethash_search_function_cra_slave.vhd" />
+		</REQUIREMENTS>
+		<DATA>
+			<INTERFACE port="call152" cosim_name="" type="master" width="512" burstwidth="5" pipelined="true" addr_space="__global" aspace_id="1" optype="read" criticality="1024" buffer_location="" group_id="0" />
+			<INTERFACE port="unnamed_ethash_search35" cosim_name="" type="master" width="512" burstwidth="5" pipelined="true" addr_space="__global" aspace_id="1" optype="read" criticality="1073741824" buffer_location="" group_id="0" />
+			<INTERFACE port="unnamed_ethash_search61" cosim_name="" type="master" width="512" burstwidth="5" pipelined="true" addr_space="__global" aspace_id="1" optype="write" criticality="1024" buffer_location="" group_id="0" />
+			<INTERFACE port="unnamed_ethash_search62" cosim_name="" type="master" width="512" burstwidth="5" pipelined="true" addr_space="__global" aspace_id="1" optype="write" criticality="1024" buffer_location="" group_id="0" />
+			<INTERFACE port="unnamed_ethash_search63" cosim_name="" type="master" width="512" burstwidth="5" pipelined="true" addr_space="__global" aspace_id="1" optype="write" criticality="1024" buffer_location="" group_id="0" />
+			<INTERFACE port="unnamed_ethash_search64" cosim_name="" type="master" width="512" burstwidth="5" pipelined="true" addr_space="__global" aspace_id="1" optype="write" criticality="1024" buffer_location="" group_id="0" />
+			<INTERFACE port="memcoalesce_g_header_load_0" cosim_name="" type="master" width="512" burstwidth="1" pipelined="true" addr_space="__constant" aspace_id="3" optype="read" criticality="1024" buffer_location="" group_id="0" />
+			<INTERFACE port="memcoalesce_null_load_0" cosim_name="" type="master" width="128" burstwidth="1" pipelined="true" addr_space="__local" aspace_id="5" optype="read" criticality="1048576" buffer_location="" group_id="0" >
+				<CONNECTION port="3" bank="0" />
+			</INTERFACE>
+			<INTERFACE port="memcoalesce_null_load_016" cosim_name="" type="master" width="128" burstwidth="1" pipelined="true" addr_space="__local" aspace_id="5" optype="read" criticality="1048576" buffer_location="" group_id="0" >
+				<CONNECTION port="3" bank="1" />
+			</INTERFACE>
+			<INTERFACE port="memdep" cosim_name="" type="master" width="128" burstwidth="1" pipelined="true" addr_space="__local" aspace_id="5" optype="write" criticality="1048576" buffer_location="" group_id="0" >
+				<CONNECTION port="0" bank="3" />
+			</INTERFACE>
+			<INTERFACE port="memdep_198" cosim_name="" type="master" width="128" burstwidth="1" pipelined="true" addr_space="__local" aspace_id="5" optype="write" criticality="1048576" buffer_location="" group_id="0" >
+				<CONNECTION port="0" bank="2" />
+			</INTERFACE>
+			<INTERFACE port="memdep_199" cosim_name="" type="master" width="128" burstwidth="1" pipelined="true" addr_space="__local" aspace_id="5" optype="write" criticality="1048576" buffer_location="" group_id="0" >
+				<CONNECTION port="0" bank="1" />
+			</INTERFACE>
+			<INTERFACE port="memdep_200" cosim_name="" type="master" width="128" burstwidth="1" pipelined="true" addr_space="__local" aspace_id="5" optype="write" criticality="1048576" buffer_location="" group_id="0" >
+				<CONNECTION port="0" bank="0" />
+			</INTERFACE>
+			<INTERFACE port="memdep_203" cosim_name="" type="master" width="128" burstwidth="1" pipelined="true" addr_space="__local" aspace_id="5" optype="write" criticality="1048576" buffer_location="" group_id="0" >
+				<CONNECTION port="1" bank="0" />
+			</INTERFACE>
+			<INTERFACE port="memdep_204" cosim_name="" type="master" width="128" burstwidth="1" pipelined="true" addr_space="__local" aspace_id="5" optype="write" criticality="1073741824" buffer_location="" group_id="0" >
+				<CONNECTION port="2" bank="0" />
+			</INTERFACE>
+			<INTERFACE port="memdep_205" cosim_name="" type="master" width="128" burstwidth="1" pipelined="true" addr_space="__local" aspace_id="5" optype="write" criticality="1048576" buffer_location="" group_id="0" >
+				<CONNECTION port="3" bank="0" />
+				<CONNECTION port="1" bank="1" />
+			</INTERFACE>
+			<INTERFACE port="unnamed_ethash_search27" cosim_name="" type="master" width="128" burstwidth="1" pipelined="true" addr_space="__local" aspace_id="5" optype="read" criticality="1048576" buffer_location="" group_id="0" >
+				<CONNECTION port="0" bank="0" />
+				<CONNECTION port="2" bank="1" />
+				<CONNECTION port="1" bank="2" />
+				<CONNECTION port="1" bank="3" />
+			</INTERFACE>
+			<INTERFACE port="unnamed_ethash_search28" cosim_name="" type="master" width="128" burstwidth="1" pipelined="true" addr_space="__local" aspace_id="5" optype="read" criticality="1048576" buffer_location="" group_id="0" >
+				<CONNECTION port="1" bank="0" />
+			</INTERFACE>
+			<INTERFACE port="unnamed_ethash_search34" cosim_name="" type="master" width="128" burstwidth="1" pipelined="true" addr_space="__local" aspace_id="5" optype="read" criticality="1073741824" buffer_location="" group_id="0" >
+				<CONNECTION port="2" bank="0" />
+			</INTERFACE>
+		</DATA>
+		<KERNEL_ARGS>
+			<ARGUMENT name="g_output" cosim_name="" opencl_access_type="ACL_ARG_ADDR_GLOBAL" opencl_type_category="ACL_ARG_MEM_OBJ" size="8" type_qualifier="RV" access_qualifier="ARG_ACCESS_NONE" type_name="search_results*" >
+		</ARGUMENT>
+			<ARGUMENT name="g_header" cosim_name="" opencl_access_type="ACL_ARG_ADDR_CONSTANT" opencl_type_category="ACL_ARG_MEM_OBJ" size="8" type_qualifier="C" access_qualifier="ARG_ACCESS_NONE" type_name="hash32_t*" >
+		</ARGUMENT>
+			<ARGUMENT name="g_dag" cosim_name="" opencl_access_type="ACL_ARG_ADDR_GLOBAL" opencl_type_category="ACL_ARG_MEM_OBJ" size="8" type_qualifier="C" access_qualifier="ARG_ACCESS_NONE" type_name="hash128_t*" >
+		</ARGUMENT>
+			<ARGUMENT name="start_nonce" cosim_name="" opencl_access_type="ACL_ARG_ADDR_NONE" opencl_type_category="ACL_ARG_BY_VALUE" size="8" type_qualifier="ARG_TYPE_NONE" access_qualifier="ARG_ACCESS_NONE" type_name="ulong" >
+		</ARGUMENT>
+			<ARGUMENT name="target" cosim_name="" opencl_access_type="ACL_ARG_ADDR_NONE" opencl_type_category="ACL_ARG_BY_VALUE" size="8" type_qualifier="ARG_TYPE_NONE" access_qualifier="ARG_ACCESS_NONE" type_name="ulong" >
+		</ARGUMENT>
+			<ARGUMENT name="isolate" cosim_name="" opencl_access_type="ACL_ARG_ADDR_NONE" opencl_type_category="ACL_ARG_BY_VALUE" size="4" type_qualifier="ARG_TYPE_NONE" access_qualifier="ARG_ACCESS_NONE" type_name="uint" >
+		</ARGUMENT>
+		</KERNEL_ARGS>
+		<PRINTF_FORMAT_STRINGS>
+		</PRINTF_FORMAT_STRINGS>
+		<PRINTF_INTERFACES>
+		</PRINTF_INTERFACES>
+	</KERNEL>
+	</KERNEL_BUNDLE>
+	<STRUCT_TYPE_DEFS>
+	</STRUCT_TYPE_DEFS>
+</KERNEL_LIST>

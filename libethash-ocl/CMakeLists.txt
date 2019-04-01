@@ -21,4 +21,7 @@ include_directories(..)
 
 add_library(ethash-ocl ${SOURCES})
 target_link_libraries(ethash-ocl PUBLIC ethcore ethash::ethash)
-target_link_libraries(ethash-ocl PRIVATE OpenCL::OpenCL)
+
+target_compile_options(ethash-ocl PRIVATE ${AOCL_COMPILER_OPTS})
+target_link_libraries(ethash-ocl ${AOCL_LINK_LIBRARIES})
+set_target_properties(ethash-ocl PROPERTIES LINK_FLAGS "-Wl,--no-as-needed")

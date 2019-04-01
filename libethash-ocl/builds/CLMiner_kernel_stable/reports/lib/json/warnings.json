@@ -1,0 +1,22 @@
+{"rows":[
+{"name":"Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-..."
+,"details":["Compiler Warning: Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-ocl/builds/CLMiner_kernel_stable.cl:379"]}
+,{"name":"Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-..."
+,"details":["Compiler Warning: Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-ocl/builds/CLMiner_kernel_stable.cl:368"]}
+,{"name":"Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-..."
+,"details":["Compiler Warning: Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-ocl/builds/CLMiner_kernel_stable.cl:333"]}
+,{"name":"Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-..."
+,"details":["Compiler Warning: Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-ocl/builds/CLMiner_kernel_stable.cl:316"]}
+,{"name":"Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-..."
+,"details":["Compiler Warning: Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-ocl/builds/CLMiner_kernel_stable.cl:313"]}
+,{"name":"Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-..."
+,"details":["Compiler Warning: Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-ocl/builds/CLMiner_kernel_stable.cl:429"]}
+,{"name":"Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-..."
+,"details":["Compiler Warning: Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-ocl/builds/CLMiner_kernel_stable.cl:402"]}
+,{"name":"Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-..."
+,"details":["Compiler Warning: Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-ocl/builds/CLMiner_kernel_stable.cl:424"]}
+,{"name":"Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-..."
+,"details":["Compiler Warning: Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-ocl/builds/CLMiner_kernel_stable.cl:402"]}
+,{"name":"Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-..."
+,"details":["Compiler Warning: Auto-unrolled loop at /home/abelardojara/workspace_remote/ethminer_fpga/libethash-ocl/builds/CLMiner_kernel_stable.cl:417"]}
+]}

@@ -1,0 +1,8 @@
+{"name":"Info","rows":[
+{"name":"Project Name","data":["CLMiner_kernel_stable"],"classes":["info-table"]},
+{"name":"Target Family, Device, Board","data":["Arria 10, 10AX115S2F45I2SGES, dcp_bsp:pac_a10"]},
+{"name":"AOC Version","data":["17.1.0 Build 240"]},
+{"name":"Quartus Version","data":["17.1.1 Build 273"]},
+{"name":"Command","data":["aoc CLMiner_kernel_stable.cl"]},
+{"name":"Reports Generated At", "data":["Mon Apr  1 13:53:08 2019"]}
+]}
