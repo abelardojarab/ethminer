@@ -1,9 +1,0 @@
-ethash_search,target_fmax,240
-ethash_search,ethash_search.B1,II,0
-ethash_search,ethash_search.B3,II,0
-ethash_search,ethash_search.B4,II,0
-ethash_search,ethash_search.B7,II,0
-ethash_calculate_dag_item,target_fmax,240
-ethash_calculate_dag_item,ethash_calculate_dag_item.B1,II,0
-ethash_calculate_dag_item,ethash_calculate_dag_item.B3,II,0
-ethash_calculate_dag_item,ethash_calculate_dag_item.B5,II,0
