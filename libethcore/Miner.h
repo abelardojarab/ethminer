@@ -30,12 +30,12 @@
 #include <libdevcore/Worker.h>
 #include "EthashAux.h"
 
-#define MINER_WAIT_STATE_WORK	 1
+#define MINER_WAIT_STATE_WORK    1
 
 
-#define DAG_LOAD_MODE_PARALLEL	 0
+#define DAG_LOAD_MODE_PARALLEL   0
 #define DAG_LOAD_MODE_SEQUENTIAL 1
-#define DAG_LOAD_MODE_SINGLE	 2
+#define DAG_LOAD_MODE_SINGLE     2
 
 using namespace std;
 
@@ -47,110 +47,112 @@ namespace eth
 
 enum class MinerType
 {
-	Mixed,
-	CL,
-	CUDA
+    Mixed,
+    CL,
+    CUDA,
+    Fpga
 };
 
 enum class HwMonitorInfoType
 {
-	UNKNOWN,
-	NVIDIA,
-	AMD
+    UNKNOWN,
+    NVIDIA,
+    AMD
 };
 
 enum class HwMonitorIndexSource
 {
-	UNKNOWN,
-	OPENCL,
-	CUDA
+    UNKNOWN,
+    OPENCL,
+    CUDA,
+    FPGA
 };
 
 struct HwMonitorInfo
 {
-	HwMonitorInfoType deviceType = HwMonitorInfoType::UNKNOWN;
-	HwMonitorIndexSource indexSource = HwMonitorIndexSource::UNKNOWN;
-	int deviceIndex = -1;
+    HwMonitorInfoType deviceType = HwMonitorInfoType::UNKNOWN;
+    HwMonitorIndexSource indexSource = HwMonitorIndexSource::UNKNOWN;
+    int deviceIndex = -1;
 
 };
 
 struct HwMonitor
 {
-	int tempC = 0;
-	int fanP = 0;
-	double powerW = 0;
+    int tempC = 0;
+    int fanP = 0;
+    double powerW = 0;
 };
 
 inline std::ostream& operator<<(std::ostream& os, HwMonitor _hw)
 {
-	string power = "";
-	if(_hw.powerW != 0){
-		ostringstream stream;
-		stream << fixed << setprecision(0) << _hw.powerW << "W";
-		power = stream.str();
-	}
-	return os << _hw.tempC << "C " << _hw.fanP << "% " << power;
+    string power = "";
+    if(_hw.powerW != 0){
+        ostringstream stream;
+        stream << fixed << setprecision(0) << _hw.powerW << "W";
+        power = stream.str();
+    }
+    return os << _hw.tempC << "C " << _hw.fanP << "% " << power;
 }
 
 /// Describes the progress of a mining operation.
 struct WorkingProgress
 {
-	uint64_t hashes = 0;		///< Total number of hashes computed.
-	uint64_t ms = 0;			///< Total number of milliseconds of mining thus far.
-	uint64_t rate() const { return ms == 0 ? 0 : hashes * 1000 / ms; }
+    uint64_t hashes = 0;        ///< Total number of hashes computed.
+    uint64_t ms = 0;            ///< Total number of milliseconds of mining thus far.
+    uint64_t rate() const { return ms == 0 ? 0 : hashes * 1000 / ms; }
 
-	std::vector<uint64_t> minersHashes;
-	std::vector<HwMonitor> minerMonitors;
-	uint64_t minerRate(const uint64_t hashCount) const { return ms == 0 ? 0 : hashCount * 1000 / ms; }
+    std::vector<uint64_t> minersHashes;
+    std::vector<HwMonitor> minerMonitors;
+    uint64_t minerRate(const uint64_t hashCount) const { return ms == 0 ? 0 : hashCount * 1000 / ms; }
 };
 
 inline std::ostream& operator<<(std::ostream& _out, WorkingProgress _p)
 {
-	float mh = _p.rate() / 1000000.0f;
-	_out << "Speed "
-		 << EthTealBold << std::fixed << std::setw(6) << std::setprecision(2) << mh << EthReset
-		 << " Mh/s    ";
+    float mh = _p.rate() / 1000000.0f;
+    _out << "Speed "
+         << EthTealBold << std::fixed << std::setw(6) << std::setprecision(2) << mh << EthReset
+         << " Mh/s    ";
 
-	for (size_t i = 0; i < _p.minersHashes.size(); ++i)
-	{
-		mh = _p.minerRate(_p.minersHashes[i]) / 1000000.0f;
-		_out << "gpu/" << i << " " << EthTeal << std::fixed << std::setw(5) << std::setprecision(2) << mh << EthReset;
-		if (_p.minerMonitors.size() == _p.minersHashes.size())
-			_out << " " << EthTeal << _p.minerMonitors[i] << EthReset;
-		_out << "  ";
-	}
+    for (size_t i = 0; i < _p.minersHashes.size(); ++i)
+    {
+        mh = _p.minerRate(_p.minersHashes[i]) / 1000000.0f;
+        _out << "gpu/" << i << " " << EthTeal << std::fixed << std::setw(5) << std::setprecision(2) << mh << EthReset;
+        if (_p.minerMonitors.size() == _p.minersHashes.size())
+            _out << " " << EthTeal << _p.minerMonitors[i] << EthReset;
+        _out << "  ";
+    }
 
-	return _out;
+    return _out;
 }
 
 class SolutionStats {
 public:
-	void accepted() { accepts++;  }
-	void rejected() { rejects++;  }
-	void failed()   { failures++; }
+    void accepted() { accepts++;  }
+    void rejected() { rejects++;  }
+    void failed()   { failures++; }
 
-	void acceptedStale() { acceptedStales++; }
-	void rejectedStale() { rejectedStales++; }
+    void acceptedStale() { acceptedStales++; }
+    void rejectedStale() { rejectedStales++; }
 
-	void reset() { accepts = rejects = failures = acceptedStales = rejectedStales = 0; }
+    void reset() { accepts = rejects = failures = acceptedStales = rejectedStales = 0; }
 
-	unsigned getAccepts()			{ return accepts; }
-	unsigned getRejects()			{ return rejects; }
-	unsigned getFailures()			{ return failures; }
-	unsigned getAcceptedStales()	{ return acceptedStales; }
-	unsigned getRejectedStales()	{ return rejectedStales; }
+    unsigned getAccepts()           { return accepts; }
+    unsigned getRejects()           { return rejects; }
+    unsigned getFailures()          { return failures; }
+    unsigned getAcceptedStales()    { return acceptedStales; }
+    unsigned getRejectedStales()    { return rejectedStales; }
 private:
-	unsigned accepts  = 0;
-	unsigned rejects  = 0;
-	unsigned failures = 0; 
+    unsigned accepts  = 0;
+    unsigned rejects  = 0;
+    unsigned failures = 0;
 
-	unsigned acceptedStales = 0;
-	unsigned rejectedStales = 0;
+    unsigned acceptedStales = 0;
+    unsigned rejectedStales = 0;
 };
 
 inline std::ostream& operator<<(std::ostream& os, SolutionStats s)
 {
-	return os << "[A" << s.getAccepts() << "+" << s.getAcceptedStales() << ":R" << s.getRejects() << "+" << s.getRejectedStales() << ":F" << s.getFailures() << "]";
+    return os << "[A" << s.getAccepts() << "+" << s.getAcceptedStales() << ":R" << s.getRejects() << "+" << s.getRejectedStales() << ":F" << s.getFailures() << "]";
 }
 
 class Miner;
@@ -164,16 +166,16 @@ class Miner;
 class FarmFace
 {
 public:
-	virtual ~FarmFace() = default;
+    virtual ~FarmFace() = default;
 
-	/**
-	 * @brief Called from a Miner to note a WorkPackage has a solution.
-	 * @param _p The solution.
-	 * @return true iff the solution was good (implying that mining should be .
-	 */
-	virtual void submitProof(Solution const& _p) = 0;
-	virtual void failedSolution() = 0;
-	virtual uint64_t get_nonce_scrambler() = 0;
+    /**
+     * @brief Called from a Miner to note a WorkPackage has a solution.
+     * @param _p The solution.
+     * @return true iff the solution was good (implying that mining should be .
+     */
+    virtual void submitProof(Solution const& _p) = 0;
+    virtual void failedSolution() = 0;
+    virtual uint64_t get_nonce_scrambler() = 0;
 };
 
 /**
@@ -187,64 +189,64 @@ class Miner: public Worker
 {
 public:
 
-	Miner(std::string const& _name, FarmFace& _farm, size_t _index):
-		Worker(_name + std::to_string(_index)),
-		index(_index),
-		farm(_farm)
-	{}
+    Miner(std::string const& _name, FarmFace& _farm, size_t _index):
+        Worker(_name + std::to_string(_index)),
+        index(_index),
+        farm(_farm)
+    {}
 
-	virtual ~Miner() = default;
+    virtual ~Miner() = default;
 
-	void setWork(WorkPackage const& _work)
-	{
-		{
-			Guard l(x_work);
-			m_work = _work;
-			workSwitchStart = std::chrono::high_resolution_clock::now();
-		}
-		kick_miner();
-	}
+    void setWork(WorkPackage const& _work)
+    {
+        {
+            Guard l(x_work);
+            m_work = _work;
+            workSwitchStart = std::chrono::high_resolution_clock::now();
+        }
+        kick_miner();
+    }
 
-	uint64_t hashCount() const { return m_hashCount.load(std::memory_order_relaxed); }
+    uint64_t hashCount() const { return m_hashCount.load(std::memory_order_relaxed); }
 
-	void resetHashCount() { m_hashCount.store(0, std::memory_order_relaxed); }
+    void resetHashCount() { m_hashCount.store(0, std::memory_order_relaxed); }
 
-	unsigned Index() { return index; };
-	HwMonitorInfo hwmonInfo() { return m_hwmoninfo; }
+    unsigned Index() { return index; };
+    HwMonitorInfo hwmonInfo() { return m_hwmoninfo; }
 
-	uint64_t get_start_nonce()
-	{
-		// Each GPU is given a non-overlapping 2^40 range to search
-		return farm.get_nonce_scrambler() + ((uint64_t) index << 40);
-	}
+    uint64_t get_start_nonce()
+    {
+        // Each GPU is given a non-overlapping 2^40 range to search
+        return farm.get_nonce_scrambler() + ((uint64_t) index << 40);
+    }
 
 protected:
 
-	/**
-	 * @brief No work left to be done. Pause until told to kickOff().
-	 */
-	virtual void kick_miner() = 0;
+    /**
+     * @brief No work left to be done. Pause until told to kickOff().
+     */
+    virtual void kick_miner() = 0;
 
-	WorkPackage work() const { Guard l(x_work); return m_work; }
+    WorkPackage work() const { Guard l(x_work); return m_work; }
 
-	void addHashCount(uint64_t _n) { m_hashCount.fetch_add(_n, std::memory_order_relaxed); }
+    void addHashCount(uint64_t _n) { m_hashCount.fetch_add(_n, std::memory_order_relaxed); }
 
-	static unsigned s_dagLoadMode;
-	static unsigned s_dagLoadIndex;
-	static unsigned s_dagCreateDevice;
-	static uint8_t* s_dagInHostMemory;
-	static bool s_exit;
-	static bool s_noeval;
+    static unsigned s_dagLoadMode;
+    static unsigned s_dagLoadIndex;
+    static unsigned s_dagCreateDevice;
+    static uint8_t* s_dagInHostMemory;
+    static bool s_exit;
+    static bool s_noeval;
 
-	const size_t index = 0;
-	FarmFace& farm;
-	std::chrono::high_resolution_clock::time_point workSwitchStart;
-	HwMonitorInfo m_hwmoninfo;
+    const size_t index = 0;
+    FarmFace& farm;
+    std::chrono::high_resolution_clock::time_point workSwitchStart;
+    HwMonitorInfo m_hwmoninfo;
 private:
-	std::atomic<uint64_t> m_hashCount = {0};
+    std::atomic<uint64_t> m_hashCount = {0};
 
-	WorkPackage m_work;
-	mutable Mutex x_work;
+    WorkPackage m_work;
+    mutable Mutex x_work;
 };
 
 }

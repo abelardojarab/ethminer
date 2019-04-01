@@ -9,8 +9,9 @@ include(HunterGate)
 
 include(defaults/HunterCacheServers)
 
-cable_configure_toolchain(DEFAULT cxx11-c99)
+cable_configure_toolchain(DEFAULT cxx11)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(HUNTER_CONFIGURATION_TYPES Release CACHE STRING "Build type of Hunter packages")
 set(HUNTER_JOBS_NUMBER 6 CACHE STRING "Number of parallel builds used by Hunter")
 HunterGate(
@@ -37,24 +38,28 @@ cmake_policy(SET CMP0054 NEW)
 ######################################################################################################
 
 option(ETHASHCL "Build with OpenCL mining" ON)
+option(ETHASHOCL "Build with OpenCL FPGA mining" ON)
 option(ETHASHCUDA "Build with CUDA mining" ON)
 option(ETHDBUS "Build with D-Bus support" OFF)
 option(APICORE "Build with API Server support" ON)
 
 # propagates CMake configuration options to the compiler
 function(configureProject)
-	if (ETHASHCL)
-		add_definitions(-DETH_ETHASHCL)
-	endif()
-	if (ETHASHCUDA)
-		add_definitions(-DETH_ETHASHCUDA)
-	endif()
-	if (ETHDBUS)
-		add_definitions(-DETH_DBUS)
-	endif()
-	if (APICORE)
-		add_definitions(-DAPI_CORE)
-	endif()
+    if (ETHASHCL)
+        add_definitions(-DETH_ETHASHCL)
+      endif()
+    if (ETHASHOCL)
+        add_definitions(-DETH_ETHASHOCL)
+    endif()
+    if (ETHASHCUDA)
+        add_definitions(-DETH_ETHASHCUDA)
+    endif()
+    if (ETHDBUS)
+        add_definitions(-DETH_DBUS)
+    endif()
+    if (APICORE)
+        add_definitions(-DAPI_CORE)
+    endif()
 endfunction()
 
 hunter_add_package(Boost COMPONENTS system)
@@ -79,6 +84,7 @@ message("-- CMake ${CMAKE_VERSION}")
 message("-- Build ${CMAKE_BUILD_TYPE} / ${CMAKE_SYSTEM_NAME}")
 message("------------------------------------------------------------- components")
 message("-- ETHASHCL         Build OpenCL components                  ${ETHASHCL}")
+message("-- ETHASHOCL        Build OpenCL FPGA components             ${ETHASHOCL}")
 message("-- ETHASHCUDA       Build CUDA components                    ${ETHASHCUDA}")
 message("-- ETHDBUS          Build D-Bus components                   ${ETHDBUS}")
 message("-- APICORE          Build API Server components              ${APICORE}")
@@ -90,28 +96,38 @@ include(EthCompilerSettings)
 
 cable_add_buildinfo_library(PREFIX ethminer)
 
+# Generic, no need to modify
 add_subdirectory(libdevcore)
+
+# Done, only one variable needed to be added on Miner.h
 add_subdirectory(libethcore)
+
+# No relevant changes
 add_subdirectory(libhwmon)
+
+# No relevant changes
 add_subdirectory(libpoolprotocols)
 
 if (ETHASHCL)
-	add_subdirectory(libethash-cl)
+    add_subdirectory(libethash-cl)
+endif ()
+if (ETHASHOCL)
+    add_subdirectory(libethash-ocl)
 endif ()
 if (ETHASHCUDA)
-	add_subdirectory(libethash-cuda)
+    add_subdirectory(libethash-cuda)
 endif ()
 if (APICORE)
-	add_subdirectory(libapicore)
+    add_subdirectory(libapicore)
 endif()
 
 add_subdirectory(ethminer)
 
 
 if(WIN32)
-	set(CPACK_GENERATOR ZIP)
+    set(CPACK_GENERATOR ZIP)
 else()
-	set(CPACK_GENERATOR TGZ)
+    set(CPACK_GENERATOR TGZ)
 endif()
 set(CPACK_PACKAGE_FILE_NAME ${PROJECT_NAME}-${PROJECT_VERSION}-${CMAKE_SYSTEM_NAME})
 set(CPACK_PACKAGE_CHECKSUM SHA256)
@@ -121,9 +137,9 @@ include(CPack)
 
 # Export some variables for CIs
 if(PROJECT_VERSION MATCHES "^([0-9]+)\\.([0-9]+)\\.([0-9]+)$")
-	set(PROJECT_VERSION_IS_PRERELEASE false)
+    set(PROJECT_VERSION_IS_PRERELEASE false)
 else()
-	set(PROJECT_VERSION_IS_PRERELEASE true)
+    set(PROJECT_VERSION_IS_PRERELEASE true)
 endif()
 configure_file(cmake/variables.sh.in variables.sh)
 configure_file(cmake/variables.ps1.in variables.ps1)
