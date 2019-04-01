@@ -16,7 +16,7 @@
 #endif
 
 #ifndef PLATFORM
-    #define PLATFORM OPENCL_PLATFORM_AMD
+    #define PLATFORM OPENCL_PLATFORM_UNKNOWN
 #endif
 
 #ifndef DAG_SIZE
@@ -32,7 +32,7 @@
 
 // Either 8, 4, 2, or 1
 #ifndef THREADS_PER_HASH
-    #define THREADS_PER_HASH 2
+    #define THREADS_PER_HASH 8
 #endif
 #define HASHES_PER_LOOP (GROUP_SIZE / THREADS_PER_HASH)
 
