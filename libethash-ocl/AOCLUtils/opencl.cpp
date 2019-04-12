@@ -347,7 +347,7 @@ std::string getDeviceName(cl_device_id did) {
 }
 
 // Returns the list of all devices.
-cl_device_id *getDevices(cl_platform_id pid, cl_device_type dev_type, cl_uint *num_devices) {
+cl_device_id *getDevicesC(cl_platform_id pid, cl_device_type dev_type, cl_uint *num_devices) {
   cl_int status;
 
   status = clGetDeviceIDs(pid, dev_type, 0, NULL, num_devices);

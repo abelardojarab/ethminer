@@ -6,7 +6,7 @@
 // whom the Software is furnished to do so, subject to the following conditions:
 // The above copyright notice and this permission notice shall be included in all copies or
 // substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 // OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -15,7 +15,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
-// 
+//
 // This agreement shall be governed in all respects by the laws of the State of California and
 // by the laws of the United States of America.
 
@@ -66,7 +66,7 @@ std::string getDeviceName(cl_device_id did);
 // Returns an array of device ids for the given platform and the
 // device type.
 // Return value must be freed with delete[].
-cl_device_id *getDevices(cl_platform_id pid, cl_device_type dev_type, cl_uint *num_devices);
+cl_device_id *getDevicesC(cl_platform_id pid, cl_device_type dev_type, cl_uint *num_devices);
 
 // Create a OpenCL program from a binary file.
 // The program is created for all given devices associated with the context. The same

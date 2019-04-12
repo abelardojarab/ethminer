@@ -18,11 +18,14 @@ using namespace aocl_utils;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wignored-attributes"
 #pragma GCC diagnostic ignored "-Wmissing-braces"
+#ifdef CL_USE_DEPRECATED_OPENCL_1_2_APIS
+#undef CL_USE_DEPRECATED_OPENCL_1_2_APIS
+#endif
 #define CL_USE_DEPRECATED_OPENCL_1_2_APIS true
 #define CL_HPP_ENABLE_EXCEPTIONS true
-#define CL_HPP_CL_1_2_DEFAULT_BUILD true
 #define CL_HPP_TARGET_OPENCL_VERSION 120
 #define CL_HPP_MINIMUM_OPENCL_VERSION 120
+
 #include "CL/cl2.hpp"
 #pragma GCC diagnostic pop
 

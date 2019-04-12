@@ -4,6 +4,7 @@
 /// @copyright GNU General Public License
 
 #include "CLMiner.h"
+#include <CL/opencl.h>
 
 #include <ethash/ethash.hpp>
 
@@ -163,8 +164,8 @@ static const char *strClError(cl_int err) {
         return "CL_INVALID_MIP_LEVEL";
     case CL_INVALID_GLOBAL_WORK_SIZE:
         return "CL_INVALID_GLOBAL_WORK_SIZE";
-    case CL_INVALID_PROPERTY:
-        return "CL_INVALID_PROPERTY";
+        //case CL_INVALID_PROPERTY:
+        //return "CL_INVALID_PROPERTY";
 
 #ifdef CL_VERSION_1_2
     case CL_INVALID_IMAGE_DESCRIPTOR:
@@ -220,7 +221,7 @@ void addDefinition(string& _source, char const* _id, unsigned _value)
     _source.insert(_source.begin(), buf, buf + strlen(buf));
 }
 
-std::vector<cl::Platform> getPlatforms()
+static std::vector<cl::Platform> getPlatforms()
 {
     vector<cl::Platform> platforms;
     try
@@ -239,19 +240,21 @@ std::vector<cl::Platform> getPlatforms()
     return platforms;
 }
 
-std::vector<cl::Device> getDevices(std::vector<cl::Platform> const& _platforms, unsigned _platformId)
+static std::vector<cl::Device> getDevices(std::vector<cl::Platform> const& _platforms, unsigned _platformId)
 {
     vector<cl::Device> devices;
-    size_t platform_num = min<size_t>(_platformId, _platforms.size() - 1);
+    uint8_t platform_num = _platformId;
+
     try
     {
         _platforms[platform_num].getDevices(
-            CL_DEVICE_TYPE_ACCELERATOR,
+            CL_DEVICE_TYPE_ALL,
             &devices
         );
     }
     catch (cl::Error const& err)
     {
+        printf("Error\n\n");
         // if simply no devices found return empty vector
         if (err.err() != CL_DEVICE_NOT_FOUND)
             throw err;
@@ -516,7 +519,7 @@ bool OCLMiner::configureGPU(unsigned _localWorkSize, int _globalWorkSizeMultipli
     {
         return true;
     }
-    cout << "No GPU device with sufficient memory was found. Can't GPU mine. Remove the -G argument" << endl;
+    cout << "No FPGA device with sufficient memory was found. Can't FPGA mine. Remove the -F argument" << endl;
     return false;
 }
 
@@ -525,6 +528,7 @@ bool OCLMiner::init(int epoch)
     // get all platforms
     try
     {
+
         vector<cl::Platform> platforms = getPlatforms();
         if (platforms.empty())
             return false;
@@ -532,31 +536,26 @@ bool OCLMiner::init(int epoch)
         // use selected platform
         unsigned platformIdx = min<unsigned>(s_platformId, platforms.size() - 1);
 
-        string platformName = platforms[platformIdx].getInfo<CL_PLATFORM_NAME>();
-        ETHCL_LOG("Platform: " << platformName);
+	platformIdx = 1;
+	string platformName = platforms[platformIdx].getInfo<CL_PLATFORM_NAME>();
+	while (platformName != "Intel(R) FPGA SDK for OpenCL(TM)"
+	    && platformIdx <= ((unsigned) platforms.size() - 2)) {
+	    platformIdx++;
+	    platformName = platforms[platformIdx].getInfo<CL_PLATFORM_NAME>();
+	}
 
+	if (platformName == "NVIDIA CUDA") {
+	    return false;
+	}
+
+        ETHCL_LOG("Platform: " << platformName);
         int platformId = OPENCL_PLATFORM_UNKNOWN;
         {
             // this mutex prevents race conditions when calling the adl wrapper since it is apparently not thread safe
             static std::mutex mtx;
             std::lock_guard<std::mutex> lock(mtx);
 
-            if (platformName == "NVIDIA CUDA")
-            {
-                platformId = OPENCL_PLATFORM_NVIDIA;
-                m_hwmoninfo.deviceType = HwMonitorInfoType::NVIDIA;
-                m_hwmoninfo.indexSource = HwMonitorIndexSource::OPENCL;
-            }
-            else if (platformName == "AMD Accelerated Parallel Processing")
-            {
-                platformId = OPENCL_PLATFORM_AMD;
-                m_hwmoninfo.deviceType = HwMonitorInfoType::AMD;
-                m_hwmoninfo.indexSource = HwMonitorIndexSource::OPENCL;
-            }
-            else if (platformName == "Clover")
-            {
-                platformId = OPENCL_PLATFORM_CLOVER;
-            } else if (platformName == "Intel(R) FPGA SDK for OpenCL(TM)")
+            if (platformName == "Intel(R) FPGA SDK for OpenCL(TM)")
             {
                 platformId = OPENCL_PLATFORM_INTELFPGA;
             }
@@ -576,41 +575,21 @@ bool OCLMiner::init(int epoch)
 
         // use selected device
         int idx = index % devices.size();
-        unsigned deviceId = s_devices[idx] > -1 ? s_devices[idx] : index;
+        unsigned deviceId = s_devices[platformIdx] > -1 ? s_devices[idx] : index;
         m_hwmoninfo.deviceIndex = deviceId % devices.size();
         cl::Device& device = devices[deviceId % devices.size()];
         string device_version = device.getInfo<CL_DEVICE_VERSION>();
         ETHCL_LOG("Device:   " << device.getInfo<CL_DEVICE_NAME>() << " / " << device_version);
 
-        string clVer = device_version.substr(7, 3);
-        if (clVer == "1.0" || clVer == "1.1")
-        {
-            if (platformId == OPENCL_PLATFORM_CLOVER)
-            {
-                ETHCL_LOG("OpenCL " << clVer << " not supported, but platform Clover might work nevertheless. USE AT OWN RISK!");
-            }
-            else
-            {
-                ETHCL_LOG("OpenCL " << clVer << " not supported - minimum required version is 1.2");
-                return false;
-            }
-        }
-
         char options[256];
         int computeCapability = 0;
         if (platformId == OPENCL_PLATFORM_NVIDIA) {
-            cl_uint computeCapabilityMajor;
-            cl_uint computeCapabilityMinor;
-            clGetDeviceInfo(device(), CL_DEVICE_COMPUTE_CAPABILITY_MAJOR_NV, sizeof(cl_uint), &computeCapabilityMajor, NULL);
-            clGetDeviceInfo(device(), CL_DEVICE_COMPUTE_CAPABILITY_MINOR_NV, sizeof(cl_uint), &computeCapabilityMinor, NULL);
-
-            computeCapability = computeCapabilityMajor * 10 + computeCapabilityMinor;
-            int maxregs = computeCapability >= 35 ? 72 : 63;
-            sprintf(options, "-cl-nv-maxrregcount=%d", maxregs);
+	    return false;
         }
         else {
             sprintf(options, "%s", "");
         }
+
         // create context
         m_context = cl::Context(vector<cl::Device>(&device, &device + 1));
         m_queue = cl::CommandQueue(m_context, device);
@@ -647,6 +626,7 @@ bool OCLMiner::init(int epoch)
         string code;
 
         if( s_clKernelName == OCLKernelName::Fpga ) {
+            printf("Found the kernel file.");
             std::ifstream t("kernel.aocx");
             if (t.good()) {
                 std::string ckernel;
@@ -664,21 +644,6 @@ bool OCLMiner::init(int epoch)
             code = "";
         }
 
-        /* if ( s_clKernelName == CLKernelName::Experimental ) {
-            cllog << "OpenCL kernel: Experimental kernel";
-            code = string(OCLMiner_kernel_experimental, OCLMiner_kernel_experimental + sizeof(OCLMiner_kernel_experimental));
-        }
-        else { //if(s_clKernelName == CLKernelName::Stable)
-            cllog << "OpenCL kernel: Stable kernel";
-
-            //OCLMiner_kernel_stable.cl will do a #undef THREADS_PER_HASH
-            if(s_threadsPerHash != 8) {
-                cwarn << "The current stable OpenCL kernel only supports exactly 8 threads. Thread parameter will be ignored.";
-            }
-
-            code = string(OCLMiner_kernel_stable, OCLMiner_kernel_stable + sizeof(OCLMiner_kernel_stable));
-            }*/
-
         addDefinition(code, "GROUP_SIZE", m_workgroupSize);
         addDefinition(code, "DAG_SIZE", dagNumItems);
         addDefinition(code, "LIGHT_SIZE", lightNumItems);
@@ -691,7 +656,6 @@ bool OCLMiner::init(int epoch)
         // create miner OpenCL program
         /* cl::Program::Sources sources{{code.data(), code.size()}};
            cl::Program program(m_context, sources); */
-
 
         // create miner OpenCL program
         std::string binary_file = getBoardBinaryFile("kernel", device());
@@ -763,6 +727,7 @@ bool OCLMiner::init(int epoch)
         m_dagKernel.setArg(2, m_dag);
         m_dagKernel.setArg(3, ~0u);
 
+	printf("****here ***");
         auto startDAG = std::chrono::steady_clock::now();
         for (uint32_t i = 0; i < fullRuns; i++)
         {
