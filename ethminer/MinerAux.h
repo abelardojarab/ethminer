@@ -333,7 +333,7 @@ public:
                 BOOST_THROW_EXCEPTION(BadArgument());
             }
 #endif
-#if ETH_ETHASHCL || ETH_ETHASHCUDA
+#if ETH_ETHASHCL || ETH_ETHASHCUDA || ETH_ETHASHOCL
         else if (arg == "--list-devices")
             m_shouldListDevices = true;
 #endif
@@ -469,6 +469,10 @@ public:
         {
             m_minerType = MinerType::CUDA;
         }
+        else if (arg == "-F" || arg == "--fpga")
+        {
+            m_minerType = MinerType::Fpga;
+        }
         else if (arg == "-X" || arg == "--cuda-opencl")
         {
             m_minerType = MinerType::Mixed;
@@ -535,7 +539,7 @@ public:
 
     void execute()
     {
-        if (m_shouldListDevices)
+        if (true) // m_shouldListDevices)
         {
 #if ETH_ETHASHCL
             if (m_minerType == MinerType::CL || m_minerType == MinerType::Mixed)
@@ -549,7 +553,7 @@ public:
             if (m_minerType == MinerType::Fpga || m_minerType == MinerType::Mixed)
                 OCLMiner::listDevices();
 #endif
-            exit(0);
+            // exit(0);
         }
 
         auto* build = ethminer_get_buildinfo();
@@ -608,11 +612,12 @@ public:
                 exit(1);
 
             CUDAMiner::setParallelHash(m_parallelHash);
-#else
-            cerr << "CUDA support disabled. Configure project build with -DETHASHCUDA=ON" << endl;
-            exit(1);
+            //#else
+            //cerr << "CUDA support disabled. Configure project build with -DETHASHCUDA=ON" << endl;
+            //exit(1);
 #endif
         }
+
 
         if (m_minerType == MinerType::Fpga || m_minerType == MinerType::Mixed)
         {
@@ -622,6 +627,7 @@ public:
                 OCLMiner::setDevices(m_openclDevices, m_openclDeviceCount);
                 m_miningThreads = m_openclDeviceCount;
             }
+
 
             OCLMiner::setCLKernel(m_openclSelectedKernel);
             OCLMiner::setThreadsPerHash(m_openclThreadsPerHash);

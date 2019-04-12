@@ -15,7 +15,7 @@ static string diffToDisplay(double diff)
 		diff = diff / 1000.0;
 	}
 	stringstream ss;
-	ss << fixed << setprecision(2) << diff << ' ' << k[i]; 
+	ss << fixed << setprecision(2) << diff << ' ' << k[i];
 	return ss.str();
 }
 
@@ -31,6 +31,8 @@ PoolManager::PoolManager(PoolClient * client, Farm &farm, MinerType const & mine
 			cnote << "Spinning up miners...";
 			if (m_minerType == MinerType::CL)
 				m_farm.start("opencl", false);
+			else if (m_minerType == MinerType::Fpga)
+				m_farm.start("fpga", false);
 			else if (m_minerType == MinerType::CUDA)
 				m_farm.start("cuda", false);
 			else if (m_minerType == MinerType::Mixed) {
@@ -226,7 +228,7 @@ void PoolManager::tryReconnect()
 		p_client->connect();
 		return;
 	}
-	
+
 	// Fallback logic, tries current connection multiple times and then switches to
 	// one of the other connections.
 	if (m_reconnectTries > m_reconnectTry) {

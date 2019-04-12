@@ -96,9 +96,9 @@ include(EthCompilerSettings)
 
 cable_add_buildinfo_library(PREFIX ethminer)
 
-execute_process(COMMAND ${AOCL_SDK_ROOT}/bin/aocl compile-config
+execute_process(COMMAND aocl compile-config
   OUTPUT_VARIABLE AOCL_COMPILE_CONFIG)
-execute_process(COMMAND ${AOCL_SDK_ROOT}/bin/aocl link-config
+execute_process(COMMAND aocl link-config
   OUTPUT_VARIABLE AOCL_LINK_CONFIG)
 string(REGEX REPLACE "\n$" "" AOCL_COMPILE_CONFIG "${AOCL_COMPILE_CONFIG}")
 string(REGEX REPLACE "\n$" "" AOCL_LINK_CONFIG "${AOCL_LINK_CONFIG}")
@@ -109,7 +109,9 @@ string(REGEX REPLACE "-l([^;]*)" "\\1" AOCL_LIBRARIES "${AOCL_LIBRARIES}")
 string(REGEX REPLACE "-L([^;]*)" "\\1" AOCL_LINK_SEARCH "${AOCL_LINK_SEARCH}")
 
 separate_arguments(AOCL_COMPILER_OPTS UNIX_COMMAND
-      "${AOCL_LINK_CONFIG} ${AOCL_COMPILE_CONFIG}")
+  "${AOCL_LINK_CONFIG} ${AOCL_COMPILE_CONFIG}")
+
+message("HERE=${AOCL_COMPILE_CONFIG}")
 
 # Generic, no need to modify
 add_subdirectory(libdevcore)

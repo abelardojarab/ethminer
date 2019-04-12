@@ -1,4 +1,5 @@
 cmake_policy(SET CMP0015 NEW)
+set(CMAKE_CXX_FLAGS "-Wno-ignored-qualifiers -Wno-deprecated-declarations -Wno-unused-parameter -Wno-ignored-attributes -Wno-unused-function")
 
 aux_source_directory(. SRC_LIST)
 
@@ -11,7 +12,7 @@ file(GLOB HEADERS "*.h")
 
 add_executable(${EXECUTABLE} ${SRC_LIST} ${HEADERS})
 
-target_link_libraries(ethminer PRIVATE ethcore poolprotocols devcore ethminer-buildinfo ethash-ocl)
+target_link_libraries(ethminer PRIVATE ethash-ocl ethcore poolprotocols devcore ethminer-buildinfo)
 
 if(ETHDBUS)
     find_package(PkgConfig)
