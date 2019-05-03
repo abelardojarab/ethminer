@@ -111,8 +111,6 @@ string(REGEX REPLACE "-L([^;]*)" "\\1" AOCL_LINK_SEARCH "${AOCL_LINK_SEARCH}")
 separate_arguments(AOCL_COMPILER_OPTS UNIX_COMMAND
   "${AOCL_LINK_CONFIG} ${AOCL_COMPILE_CONFIG}")
 
-message("HERE=${AOCL_COMPILE_CONFIG}")
-
 # Generic, no need to modify
 add_subdirectory(libdevcore)
 

@@ -254,7 +254,6 @@ static std::vector<cl::Device> getDevices(std::vector<cl::Platform> const& _plat
     }
     catch (cl::Error const& err)
     {
-        printf("Error\n\n");
         // if simply no devices found return empty vector
         if (err.err() != CL_DEVICE_NOT_FOUND)
             throw err;
@@ -536,17 +535,17 @@ bool OCLMiner::init(int epoch)
         // use selected platform
         unsigned platformIdx = min<unsigned>(s_platformId, platforms.size() - 1);
 
-	platformIdx = 1;
-	string platformName = platforms[platformIdx].getInfo<CL_PLATFORM_NAME>();
-	while (platformName != "Intel(R) FPGA SDK for OpenCL(TM)"
-	    && platformIdx <= ((unsigned) platforms.size() - 2)) {
-	    platformIdx++;
-	    platformName = platforms[platformIdx].getInfo<CL_PLATFORM_NAME>();
-	}
+	    platformIdx = 1;
+	    string platformName = platforms[platformIdx].getInfo<CL_PLATFORM_NAME>();
+	    while (platformName != "Intel(R) FPGA SDK for OpenCL(TM)"
+    	    && platformIdx <= ((unsigned) platforms.size() - 2)) {
+	        platformIdx++;
+	        platformName = platforms[platformIdx].getInfo<CL_PLATFORM_NAME>();
+	    }
 
-	if (platformName == "NVIDIA CUDA") {
-	    return false;
-	}
+    	if (platformName == "NVIDIA CUDA") {
+	        return false;
+	    }
 
         ETHCL_LOG("Platform: " << platformName);
         int platformId = OPENCL_PLATFORM_UNKNOWN;
@@ -584,7 +583,7 @@ bool OCLMiner::init(int epoch)
         char options[256];
         int computeCapability = 0;
         if (platformId == OPENCL_PLATFORM_NVIDIA) {
-	    return false;
+	        return false;
         }
         else {
             sprintf(options, "%s", "");
@@ -727,8 +726,7 @@ bool OCLMiner::init(int epoch)
         m_dagKernel.setArg(2, m_dag);
         m_dagKernel.setArg(3, ~0u);
 
-	printf("****here ***");
-        auto startDAG = std::chrono::steady_clock::now();
+	auto startDAG = std::chrono::steady_clock::now();
         for (uint32_t i = 0; i < fullRuns; i++)
         {
             m_dagKernel.setArg(0, i * m_globalWorkSize);
